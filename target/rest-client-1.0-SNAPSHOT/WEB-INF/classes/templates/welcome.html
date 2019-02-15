@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Приветствие</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            padding: 30px;
+        }
+
+        .girl {
+            position: absolute;
+            left: 250px;
+            bottom: 0px;
+            z-index: -1000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form id="logoutForm" th:action="@{/logout}" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+    <h2>Привет <span sec:authentication="principal.username">Username</span>! | <a onclick="document.forms['logoutForm'].submit()">Выход</a>
+    </h2>
+</div>
+<div class="girl">
+    <img style="height: 450px;" th:src="@{/images/gir.png}">
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+</body>
+</html>

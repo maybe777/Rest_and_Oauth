@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>REST клиент</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <!--<img th:src="@{/img/doggy.jpeg}" height="514" width="604"/>-->
+    <h3>REST клиент</h3>
+    <form id="logoutForm" th:action="@{/logout}" method="POST">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+    <h2>Привет <span sec:authentication="principal.username">Username</span>! | <a
+            onclick="document.forms['logoutForm'].submit()">Выход</a>
+    </h2>
+</div>
+<div class="col-md-12">
+    <br/>
+    <form align="center" role="form" class="form-inline" th:action="@{/edit}" method="POST">
+        <input type="number" class="invisible" id="id" name="id" th:value="${user.id}">
+        <br/>
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+               th:value="${user.email}">
+        <label for="password">Пароль</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"
+               th:value="${user.password}">
+        <br/><br/>
+        <label for="username">Имя</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Имя"
+               th:value="${user.username}">
+        <label for="lastname">Фамилия</label>
+        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Фамилию"
+               th:value="${user.lastname}">
+        <label for="phone">Телефон</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="Номер телефона"
+               th:value="${user.phone}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Редактировать" class="btn btn-success">
+        <button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#myModal">Добавить</button>
+        <br><br>
+    </form>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thread>
+                <tr>
+                    <th>id</th>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>E-mail</th>
+                    <th>Телефон</th>
+                    <th>Редактирование</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr th:each="usr: ${all}">
+                <td th:text="${usr.id}"></td>
+                <td th:text="${usr.username}"></td>
+                <td th:text="${usr.lastname}"></td>
+                <td th:text="${usr.email}"></td>
+                <td th:text="${usr.phone}"></td>
+                <td align="center">
+                    <div class="btn-group">
+                        <a th:href="@{|/all/fillForm?usrId=${usr.id}|}">
+                            <button method="POST" type="button" class="btn btn-primary">Edit</button>
+                        </a>
+                        <a th:href="@{|/delete?id=${usr.id}|}">
+                            <button type="button" class="btn btn-primary">Delete</button>
+                        </a>
+                    </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавить пользователя</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" th:action="@{/add}">
+                    <input type="number" class="invisible" id="add_id" name="id" th:value="${user.id}">
+                    <input type="text" class="form-control" id="add_username" name="username" placeholder="Имя"
+                           th:value="${user.username}">
+                    <br/>
+                    <input type="text" class="form-control" id="add_lastname" name="lastname" placeholder="Фамилия"
+                           th:value="${user.lastname}">
+                    <br/>
+                    <input type="password" class="form-control" id="add_password" name="password" placeholder="Пароль"
+                           th:value="${user.password}">
+                    <br/>
+                    <input type="email" class="form-control" id="add_email" name="email" placeholder="Email"
+                           th:value="${user.email}">
+                    <br/>
+                    <input type="text" class="form-control" id="add_phone" name="phone" placeholder="Номер телефона"
+                           th:value="${user.phone}">
+                    <br/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <br/>
+                    <input type="submit" value="Сохранить" class="btn btn-success">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

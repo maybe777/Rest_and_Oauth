@@ -1,0 +1,9 @@
+com/maybe/app/dao/RestDao.class
+com/maybe/app/service/AppAuthenticationSuccessHandler.class
+com/maybe/app/ApplicationStarter.class
+com/maybe/app/controller/AppController.class
+com/maybe/app/model/User.class
+com/maybe/app/dao/impl/RestDaoImpl.class
+com/maybe/app/security/WebSecurityConfig.class
+com/maybe/app/model/Role.class
+com/maybe/app/service/AuthProviderImpl.class
